@@ -1,7 +1,7 @@
 <?php
 /**
  * webtrees: online genealogy
- * Copyright (C) 2016 webtrees development team
+ * Copyright (C) 2017 webtrees development team
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -29,24 +29,7 @@ class CloudsTheme extends AbstractTheme implements ThemeInterface {
 	 * @return string A relative path, such as "themes/foo/"
 	 */
 	public function assetUrl() {
-		return 'themes/clouds/css-1.7.8/';
-	}
-
-	/**
-	 * Add markup to a flash message.
-	 *
-	 * @param \stdClass $message
-	 *
-	 * @return string
-	 */
-	protected function flashMessageContainer(\stdClass $message) {
-		// This theme uses jQueryUI markup.
-		switch ($message->status) {
-		case 'danger':
-			return '<p class="ui-state-error">' . $message->text . '</p>';
-		default:
-			return '<p class="ui-state-highlight">' . $message->text . '</p>';
-		}
+		return 'themes/clouds/css-1.8.0/';
 	}
 
 	/**
@@ -70,17 +53,6 @@ class CloudsTheme extends AbstractTheme implements ThemeInterface {
 	}
 
 	/**
-	 * Create a search field and submit button for the quick search form in the header.
-	 *
-	 * @return string
-	 */
-	protected function formQuickSearchFields() {
-		return
-			'<input type="search" name="query" size="15" placeholder="' . I18N::translate('Search') . '">' .
-			'<input class="search-icon" type="image" src="' . $this->assetUrl() . 'images/go.png" alt="' . I18N::translate('Search') . '" title="' . I18N::translate('Search') . '">';
-	}
-
-	/**
 	 * Allow themes to add extra scripts to the page footer.
 	 *
 	 * @return string
@@ -97,7 +69,7 @@ class CloudsTheme extends AbstractTheme implements ThemeInterface {
 			' transition: "none",' .
 			' slideshowStart: "' . I18N::translate('Play') . '",' .
 			' slideshowStop: "' . I18N::translate('Stop') . '",' .
-			' title: function() { return jQuery(this).data("title"); }' .
+			' title: function() { return $(this).data("title"); }' .
 			'});' .
 			'</script>';
 	}
@@ -126,38 +98,12 @@ class CloudsTheme extends AbstractTheme implements ThemeInterface {
 	}
 
 	/**
-	 * Create the primary menu.
-	 *
-	 * @param Menu[] $menus
-	 *
-	 * @return string
-	 */
-	protected function primaryMenuContent(array $menus) {
-		$html = '';
-
-		foreach ($menus as $menu) {
-			// Create an inert menu - to use as a label
-			$tmp = new Menu($menu->getLabel(), '');
-
-			// Insert the label into the submenu
-			$submenus = $menu->getSubmenus();
-			array_unshift($submenus, $tmp);
-			$menu->setSubmenus($submenus);
-
-			$html .= $menu->getMenuAsList();
-		}
-
-		return $html;
-	}
-
-	/**
 	 * A list of CSS files to include for this page.
 	 *
 	 * @return string[]
 	 */
 	protected function stylesheets() {
-		return [
-			'themes/clouds/jquery-ui-1.11.2/jquery-ui.css',
+		return parent::stylesheets() + [
 			$this->assetUrl() . 'style.css',
 		];
 	}
